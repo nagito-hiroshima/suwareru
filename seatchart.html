@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="JA">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="10; URL=https://script.google.com/a/macros/nnn.ed.jp/s/AKfycbzuND04QWeWGg37K54k-8BJQKHNVVxhKBq4z8WpX3IdzeliHPxP12Wpxo-fc1fGPSEowg/exec">
+  <title>座席表</title>
+
+  <!-- jQuery / jQuery UI -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+ 
+  <!-- jQuery Touch Punch - Enable Touch Drag and Drop -->
+  <script src="https://officeforest.org/wp/library/shapeshift/jquery.touch-punch.min.js"></script>
+
+  <!-- jQuery.Shapeshift -->
+  <script src="https://officeforest.org/wp/library/shapeshift/jquery.shapeshift.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  
+  <!-- スタイルシート -->
+  <style>
+    .container {
+      border: 0px dashed #CCC;
+      position: relative;
+      line-height: 13px;
+
+    }
+    
+    .container > div {
+      background: #FFFFFF;
+      position: absolute;
+      height: 50px;
+      width: 75px;
+      border-style: solid;
+      border-color: #5882FA;
+      font-size: 10px;
+      font-weight:bold;
+      text-align:center;
+      display: inline-block;
+      
+    }
+    
+    .container > div:hover{
+      background-color: #f5ffaa;
+      -webkit-transition: all 0.2s ease;
+      -moz-transition: all 0.2s ease;
+      -o-transition: all 0.2s ease;
+      transition: all  0.2s ease;
+    }
+    
+    .container > div:active{
+      background-color: #ffc9d7;
+      -webkit-transition: all 0.2s ease;
+      -moz-transition: all 0.2s ease;
+      -o-transition: all 0.2s ease;
+      transition: all  0.2s ease;
+    }
+
+    .container > div[data-ss-colspan="2"] { width: 130px; background:#d3ffd7;}
+    .container > div[nothing="1"] { visibility:hidden; }
+    .container > div[cabinet="1"] { background:#A4A4A4; color:#fff;}
+
+    .container > .ss-placeholder-child {
+      background: transparent;
+      border: 1px dashed blue;
+    }
+    
+    /* ダイアログの背景画像変更用 */
+    .ui-widget-overlay {
+      background: #000 url(https://nnn.ed.jp/assets/img/lp/201604/img-difference-01-pc.jpg) 10% 100% repeat-x;
+      opacity: .50;
+      background-size: 100% 100%;
+      filter: Alpha(Opacity=70);
+    }
+
+    .box {
+      float: left;
+      width: 180px;
+      text-align: center;
+    }
+    
+    .box2 {
+      float: left;
+      width: 180px;
+      text-align: center;
+    }
+
+    .boxContainer {
+      overflow: hidden;
+      width:100%;
+    }
+    
+    /* clearfix */
+    .boxContainer:before,
+    .boxContainer:after {
+      content: "";
+      display: table;
+    }
+    
+    .boxContainer:after {
+      clear: both;
+    }
+    
+    /* For IE 6/7 (trigger hasLayout) */
+      .boxContainer {
+      zoom: 1;
+    }
+  
+  </style>
+
+  <!-- Javascript -->
+  <script>
+    //起動時に自動的に起動するスクリプト
+    google.script.run.withSuccessHandler(onSeat).nowsheetlist();
+    
+    //クリック時に確保する一時座席ID
+    var tempseat = "";
+
+    //ダイアログ表示用
+    $(function() {
+        $( "#dialog" ).dialog({
+          autoOpen: false,
+          closeText: "保存せずに閉じます",
+          width: 400,
+          height: 170,
+             title: "作業内容",
+          modal: true,
+          show: {
+            effect: "clip",
+            duration: 500
+          },
+          hide: {
+            effect: "clip",
+            duration: 500
+          },
+          position: {
+            of : 'body',
+            at: 'center',
+            my: 'center'
+          }
+        });
+    });	
+
+    //登録用ダイアログ表示設定
+    $(function() {
+        $( "#dialog2" ).dialog({
+          autoOpen: false,
+          closeText: "保存せずに閉じます",
+          width: 400,
+          height: 170,
+             title: "作業内容",
+          modal: true,
+          show: {
+            effect: "clip",
+            duration: 500
+          },
+          hide: {
+            effect: "clip",
+            duration: 500
+          },
+          position: {
+            of : 'body',
+            at: 'center',
+            my: 'center'
+          }
+        });
+    });	
+
+    $(function() {
+        $( "input[type=submit], a, button" )
+          .button()
+          .click(function() {
+          });
+    });
+    
+    //シート状況をチャートに反映するコード
+    function onSeat(data){
+      //データをパースする
+      var json = JSON.parse(data);
+      var length = json.length;
+
+      //ループを回してシート状況を反映する
+      for(var i = 0;i<length;i++){
+        
+        //固定フラグがONのデータの場合スルーする
+        if(json[i][1] == true){
+          //
+          if(json[i][2] == null || json[i][2] == ""){
+            //スルーする
+          }else{
+            //既定値を反映する
+            document.getElementById(json[i][0]).innerHTML  = json[i][2];
+            
+            //既定値のみ背景色を変更
+            document.getElementById(json[i][0]).style.background = "#d3f1ff";
+            
+          }
+          
+        }else{
+          //データが空の場合には、スルーし、ある場合には反映する
+          if(json[i][2] == ""　 || json[i][2] == null){
+            //データが空なので空として反映する
+            document.getElementById(json[i][0]).innerHTML  = json[i][2];
+            document.getElementById(json[i][0]).style.background = "";
+            continue;
+          }else{
+            //キープ済み
+            document.getElementById(json[i][0]).innerHTML  = json[i][2];
+            
+            //キープ済席の背景色を変更
+            document.getElementById(json[i][0]).style.background = "#f6d3ff";
+          }
+        }
+      }
+    }
+  
+    //イベントを準備する
+    $(document).ready(function() {
+      //パネルの有効化
+      $(".container").shapeshift({
+        enableDrag: false,
+        enableCrossDrop: false,
+        enableResize: false,
+        minColumns: 3,
+        minHeight:50,
+        gutterX:5,
+        gutterY:5, 
+        paddingX:5,
+        paddingY:5
+      });
+      
+      //パネルのクリックアクションを設定
+      $('.ss-active-child').on('click', function(){
+        //クリックした要素のIDを取得
+        var id =  $(this).attr("id");
+        
+        //一時変数に座席IDを確保
+        tempseat = id;
+        
+        //DIVの値を取得
+        var manname = $(this).html();
+        
+        //取得したID要素を表示
+        if(id == undefined){
+          alert("💁この席は座る事が出来ません！！");
+        }else{
+          //名前が入ってるかどうかをチェック
+          if(manname != ""){
+            //確保されてるのでユーザ情報ダイアログを表示する
+            alert("この席はすでに【" + manname + "】さんが座ってますよ。");
+            return;
+          }else{
+            //スプレッドシートを参照して対象のIDの席が空いてるかチェック
+            google.script.run.withSuccessHandler(onSuccess).checkseat(id);
+          }
+        }        
+      });
+    })
+    
+    //シートの空き状況を取得して処理をする関数
+    function onSuccess(data){
+      var json = JSON.parse(data);
+      
+      //返り値を元に処理を分岐
+      if(json == true){
+        //シート確保用のダイアログを表示する
+        //ダイアログ表示
+        $('#dialog').dialog({
+              title: "席の確保",
+              close : function(){
+              }
+          });
+        $( "#dialog" ).dialog( "open" );
+        $( "#dialog" ).dialog("moveToTop");
+        document.getElementById("dialog").focus();
+      
+      }else{
+        alert("この座席は予約できません・・・ページを更新、「ランダムモード」の場合は予約できません。");
+      }
+    }
+    
+    //シートをキープする処理
+    function seatkeep(){
+      //GAS側へシート確保処理をなげる
+      google.script.run.withSuccessHandler(onGetSeat).getseatman(tempseat);
+      
+      //ダイアログを閉じる
+      $( "#dialog" ).dialog( "close" );
+
+    }
+    
+    //シート確保をキャンセルする関数
+    function seatcancel(){
+      //ダイアログを閉じる
+      $( "#dialog" ).dialog( "close" );
+      
+      //メッセージ表示
+      alert("キャンセルしました。");
+    }
+    
+    //シート確保結果
+    function onGetSeat(data){
+      //返り値について取得する
+      var json = JSON.parse(data);
+
+      if(json[0] == true){
+        //シートが確保出来た場合の処理
+        alert("座席を確保しました。");
+        
+        //シートリストのリロード処理
+        google.script.run.withSuccessHandler(onSeat).nowsheetlist();
+        
+      }else{
+        //確保できなかった場合の処理
+        alert(json[1]);
+      }
+    }
+
+    //座席の解放ボタンを押した時のダイアログ表示用処理
+    function releaseseat(){
+      //シート確保用のダイアログを表示する
+      //ダイアログ表示
+      $('#dialog2').dialog({
+      title: "座席の解放",
+      close : function(){
+      }
+      });
+      $( "#dialog2" ).dialog( "open" );
+      $( "#dialog2" ).dialog("moveToTop");
+      document.getElementById("dialog2").focus();
+    }
+    
+    //席の解放ボタンクリック時の処理
+    function release(){
+      
+      //GAS側へシート確保処理をなげる
+      google.script.run.withSuccessHandler(onRelSeat).relseatman();
+      
+      //ダイアログを閉じる
+      $( "#dialog2" ).dialog( "close" );
+    }
+    
+    //シート確保結果
+    function onRelSeat(data){
+      //返り値について取得する
+      var json = JSON.parse(data);
+
+      if(json[0] == true){
+        //シートが確保出来た場合の処理
+        alert("座席を解放しました。");
+        
+        //シートリストのリロード処理
+        google.script.run.withSuccessHandler(onSeat).nowsheetlist();
+        
+      }else{
+        //確保できなかった場合の処理
+        alert(json[1]);
+        
+        //シートリストのリロード処理
+        google.script.run.withSuccessHandler(onSeat).nowsheetlist();
+        
+      }
+    }    
+ 
+    //シート確保をキャンセルする関数
+    function seatcancel2(){
+      //ダイアログを閉じる
+      $( "#dialog2" ).dialog( "close" );
+      
+      //メッセージ表示
+      alert("キャンセルされました。");
+    }
+
+  </script>
+</head>
+<body>
+  <div style="width:1000px">
+    <!-- 座席用HTMLを呼び出す　-->
+    <?!= HtmlService.createHtmlOutputFromFile("zaseki").getContent(); ?>
+    <hr>
+    <div align="right">
+      <button onClick='tomasopen()' id="tomas" class="create" title='出退勤を打刻する' style="visibility:hidden">出退勤</button>&nbsp;&nbsp;
+      <button onClick='releaseseat()' id="releaseman" class="action" title='席をリリースします。'>座席の解放</button>
+    </div>        
+  </div>
+  
+  <div id="dialog" title="Basic dialog">
+    <p>
+    今日はこの席で授業を受けますか？予約する場合は、予約をクリックしてください。
+    </p>
+
+    <p></p>
+    <div class='boxContainer'>
+      <div class='box2'>
+        <span><button onClick='seatkeep()' id="button1" style="font-size: 16px;vertical-align: middle" class="ponyo" title='席を確保します。'><img src='https://officeforest.org/wp/library/icons/icon_check2.png' />&nbsp; 予約</button></span>   
+      </div>
+      <div class='box'>
+        <span><button onClick='seatcancel()' id="button2" style="font-size: 16px;vertical-align: middle" class="ponyo" title='キャンセルします。'><img src='https://officeforest.org/wp/library/icons/cross.png' />&nbsp; キャンセル</button></span>
+      </div>
+    </div>
+  </div>
+  
+    <div id="dialog2" title="Basic dialog">
+      <p>
+      🍲今日はもうお帰りですか？座席を解放する場合は、リリースをクリックしてください。
+      </p>
+      <p></p>
+      <div class='boxContainer'>
+        <div class='box2'>
+          <span><button onClick='release()' id="button3" style="font-size: 16px;vertical-align: middle" class="ponyo" title='席を解放します。'><img src='https://officeforest.org/wp/library/icons/icon_check2.png' />&nbsp; リリース</button></span>   
+        </div>
+        <div class='box'>
+          <span><button onClick='seatcancel2()' id="button4" style="font-size: 16px;vertical-align: middle" class="ponyo" title='キャンセルします。'><img src='https://officeforest.org/wp/library/icons/cross.png' />&nbsp; キャンセル</button></span>
+        </div>
+      </div>
+    </div>
+    
+</body>
+</html>
