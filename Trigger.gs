@@ -47,6 +47,11 @@ function setTrigger(){
                 .forSpreadsheet(sheet)
                 .onFormSubmit()
                 .create();
+          var onChangeTrigger3 = ScriptApp.newTrigger("reset")
+               .timeBased()
+               .atHour(0)
+               .everyDays(1)
+               .create();
           cellCopy();
           var myForm = FormApp.openByUrl("https://docs.google.com/forms/d/1l0Olx6XPJDun3CwiXoyotaqAoKBTa0mN5f2LWnypexk/edit");
           myForm.setAcceptingResponses(true);

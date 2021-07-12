@@ -7,7 +7,12 @@ function set_last_update() {
   var activerow=activerange.getRow();
 
   sh.getRange(activerow, 1).setNumberFormat('yyyy/MM/dd').setValue(new Date());
-  sh.getRange('A1').setValue("日付");
+  sh.getRange(activerow, 2).setValue("=A"+ activerow);
+  sh.getRange(activerow,4).setValue("=IFERROR(VLOOKUP(C"+activerow+",'名簿'!A2:E,2,FALSE),IFERROR(VLOOKUP(C"+activerow+",{'名簿'!D:D,'名簿'!B:B},2,false),IFERROR(LEFT(RIGHT(C"+activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")),FIND(\"@\",RIGHT(C"+activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")))-1))))");
+  
+  const last_row = sh.getLastRow();　 //F列の値を全て取得
+  sh.getRange(last_row+1,3).activate();
+
   
 }
  
@@ -22,8 +27,7 @@ function reset2(){
   switch(result){
        case result.YES:
           var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("記録");
-          sh.getRange('A2:A').clearContent();
-          sh.getRange('C2:C').clearContent();
+          sh.getRange('A2:D').clearContent();
           ui.alert("累計記録を削除しました");
           break;
        case result.NO:
@@ -36,11 +40,17 @@ function reset2(){
 function form(e) {
 var name = e.namedValues["メールアドレス"];
 var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("記録");
-const FValues = sh.getRange('C:C').getValues();　 //F列の値を全て取得
-const last_row = FValues.filter(String).length;　　//空白の要素を除いた長さを取得
-sh.getRange(last_row + 1, 3).setValue(name);
-sh.getRange(last_row+ 1, 1).setNumberFormat('yyyy/MM/dd').setValue(new Date());
+sh.getRange('A1').setValue("日付");
+const last_row = sh.getLastRow();
+var activerow = last_row +2;
+sh.getRange(last_row+2,4).setValue("=IFERROR(VLOOKUP(C"+activerow+",'名簿'!A2:E,2,FALSE),IFERROR(VLOOKUP(C"+activerow+",{'名簿'!D:D,'名簿'!B:B},2,false),IFERROR(LEFT(RIGHT(C"+activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")),FIND(\"@\",RIGHT(C"+activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")))-1))))");
+sh.getRange(last_row+2 , 3).setValue(name);
+sh.getRange(last_row+2, 2).setValue("=A"+ (last_row+2));
+sh.getRange(last_row+2, 1).setNumberFormat('yyyy/MM/dd').setValue(new Date());
+
+
 }
+
 
 function cellCopy(){
 //スクリプトに紐付いたアクティブなシートを読み込む

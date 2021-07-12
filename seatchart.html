@@ -2,7 +2,6 @@
 <html lang="JA">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="10; URL=https://script.google.com/a/macros/nnn.ed.jp/s/AKfycbzuND04QWeWGg37K54k-8BJQKHNVVxhKBq4z8WpX3IdzeliHPxP12Wpxo-fc1fGPSEowg/exec">
   <title>座席表</title>
 
   <!-- jQuery / jQuery UI -->
@@ -110,12 +109,14 @@
   </style>
 
   <!-- Javascript -->
+
   <script>
     //起動時に自動的に起動するスクリプト
     google.script.run.withSuccessHandler(onSeat).nowsheetlist();
     
     //クリック時に確保する一時座席ID
     var tempseat = "";
+    
 
     //ダイアログ表示用
     $(function() {
