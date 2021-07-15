@@ -21,6 +21,10 @@ function set_last_update() {
 function reset() {//座席ランダム関数
   var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
   sh.getRange('A2:A33').randomize();
+  var onChangeTrigger2 = ScriptApp.newTrigger("set_last_update")
+                .forSpreadsheet(sheet)
+                .onEdit()
+                .create();
 }
 
 function reset2(){
