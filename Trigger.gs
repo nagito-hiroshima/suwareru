@@ -62,7 +62,7 @@ function setTrigger(){
 
 
  
-function delTrigger() {
+function delTrigger() {//トリガーからset_last_updateを削除する
 
   const triggers = ScriptApp.getProjectTriggers();
   for(const trigger of triggers){
@@ -73,7 +73,7 @@ function delTrigger() {
   
 }
 
-function set_last(){
+function set_last(){//トリガーにset_last_updateを追加する
   var Properties = PropertiesService.getScriptProperties();
   var ssid = Properties.getProperty("sheetid");
   var sheet = SpreadsheetApp.openById(ssid);
