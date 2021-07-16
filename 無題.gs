@@ -1,22 +1,38 @@
 function set_last_update() {
-
-  var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("記録");
-  
-  
+  var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("記録"); 
   var activerange=sh.getActiveRange();
-  
   var activerow=activerange.getRow();
   
-  const last_row = sh.getLastRow();　 //F列の値を全て取得
-  sh.getRange(last_row+1,3).activate();
   sh.getRange(activerow, 1).setNumberFormat('yyyy/MM/dd').setValue(new Date());
   sh.getRange(activerow, 2).setValue("=A"+ activerow);
   sh.getRange(activerow,4).setValue("=IFERROR(VLOOKUP(C"+activerow+",'名簿'!A2:E,2,FALSE),IFERROR(VLOOKUP(C"+activerow+",{'名簿'!D:D,'名簿'!B:B},2,false),IFERROR(LEFT(RIGHT(C"+activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")),FIND(\"@\",RIGHT(C"+activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")))-1))))");
   
+  var last_row = sh.getLastRow();
+  var myRange = sh.getRange('C'+(activerow+1));
   
+  if(myRange.isBlank()){
+    sh.getRange(last_row+1,3).activate();
+  
+  }else{
+    //コピー対象のセル範囲を選択する
+    sh.getRange(last_row+1,3).activate();
+    var last_row = sh.getLastRow();　 //F列の値を全て取得
+    //貼り付け先のセル範囲を選択する
+    let pasteRange = sh.getRange('A'+(last_row+1)+":A"+(last_row+1));
+    sh.getRange(activerow, 1).setNumberFormat('yyyy/MM/dd').setValue(new Date());
+    sh.getRange(activerow, 2).setValue("=A"+ activerow);
+    sh.getRange(activerow,4).setValue("=IFERROR(VLOOKUP(C"+activerow+",'名簿'!A2:E,2,FALSE),IFERROR(VLOOKUP(C"+activerow+",{'名簿'!D:D,'名簿'!B:B},2,false),IFERROR(LEFT(RIGHT(C"   +activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")),FIND(\"@\",RIGHT(C"+activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")))-1))))");
+    
+    let copyRange = sh.getRange('A'+ activerow+":"+'D'+(activerow));
+    //コピー対象のセル範囲のデータを貼り付け先のセルにコピーする
+    //オプション指定で書式についてはコピー対象から除外する
+    copyRange.copyTo(pasteRange);
+      var last_row = sh.getLastRow();　 //F列の値を全て取得
 
-  
+    sh.deleteRows(activerow);
+  }  
 }
+
  
 function reset() {//座席ランダム関数
   var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
