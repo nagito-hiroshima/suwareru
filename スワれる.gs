@@ -1,5 +1,4 @@
 function set_last_update() {　//編集時A列に時刻記入
-  showSidebar();
   var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("記録"); 
   var activerange=sh.getActiveRange();
   var activerow=activerange.getRow();
