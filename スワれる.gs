@@ -1,8 +1,8 @@
 function set_last_update() {　//編集時A列に時刻記入
+  showSidebar();
   var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("記録"); 
   var activerange=sh.getActiveRange();
   var activerow=activerange.getRow();
-  
   sh.getRange(activerow, 1).setNumberFormat('yyyy/MM/dd').setValue(new Date());
   sh.getRange(activerow, 2).setValue("=A"+ activerow);
   sh.getRange(activerow,4).setValue("=IFERROR(VLOOKUP(C"+activerow+",'名簿'!A2:E,2,FALSE),IFERROR(VLOOKUP(C"+activerow+",{'名簿'!D:D,'名簿'!B:B},2,false),IFERROR(LEFT(RIGHT(C"+activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")),FIND(\"@\",RIGHT(C"+activerow+",LEN(C"+activerow+")-FIND(\"_\",C"+activerow+")))-1))))");
@@ -35,8 +35,13 @@ function set_last_update() {　//編集時A列に時刻記入
 
  
 function reset() {//座席ランダム関数
+　delTrigger();
   var sh=SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
-  sh.getRange('A2:A33').randomize();
+  sh.getRange('A2:A25').randomize();
+  
+  var Properties = PropertiesService.getScriptProperties();
+  var ssid = Properties.getProperty("sheetid");
+  var sheet = SpreadsheetApp.openById(ssid);
   var onChangeTrigger2 = ScriptApp.newTrigger("set_last_update")
                 .forSpreadsheet(sheet)
                 .onEdit()

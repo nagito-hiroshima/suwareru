@@ -1,0 +1,14 @@
+<!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+
+<div class="sidebar branding-below">
+    <p>
+    SE再生プレイヤー
+    </p>
+    <audio id="player" src="https://soundeffect-lab.info/sound/voice/mp3/line-girl1/line-girl1-o1.mp3" autoplay type="audio/mpeg"></audio>
+    <div id="sidebar-status"></div>
+</div>
+
+<div class="sidebar bottom">
+  <span class="gray branding-text">2021 nagito-hiroshima</span>
+</div>

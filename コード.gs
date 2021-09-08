@@ -1,7 +1,7 @@
 // @ts-nocheck
 //起動時に表示するメニュー
 function onOpen(e) {
-  var ui = SpreadsheetApp.getUi();
+  let ui = SpreadsheetApp.getUi();
   ui.createMenu('座席予約システム「スワれる」')
       .addItem('座席ランダム', 'reset')
       .addItem('モード切り替え', 'setTrigger')
@@ -18,6 +18,10 @@ function onOpen(e) {
 
       .addSeparator()
       .addItem('履歴全削除', 'reset2')
+      .addToUi();
+    SpreadsheetApp.getUi()
+      .createMenu('SE再生プレイヤー')
+      .addItem('再生', 'showSidebar')
       .addToUi();
 }
 
