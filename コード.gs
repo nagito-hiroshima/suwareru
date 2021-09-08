@@ -8,7 +8,6 @@ function onOpen(e) {
       
       .addSeparator()
       .addItem('セットアップ', 'setup')
-      .addItem('Googleフォームリセット', 'reset3')
       .addItem('定期リセット再現（手動ボタン）', 'clearsheet')
       .addToUi();
 
@@ -18,10 +17,6 @@ function onOpen(e) {
 
       .addSeparator()
       .addItem('履歴全削除', 'reset2')
-      .addToUi();
-    SpreadsheetApp.getUi()
-      .createMenu('SE再生プレイヤー')
-      .addItem('再生', 'showSidebar')
       .addToUi();
 }
 
