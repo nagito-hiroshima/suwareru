@@ -4,16 +4,17 @@ function onOpen(e) {
   let ui = SpreadsheetApp.getUi();
   ui.createMenu('座席予約システム「スワれる」')
       .addItem('座席ランダム', 'reset')
+      /*
       .addItem('モード切り替え', 'setTrigger')
       
       .addSeparator()
       .addItem('セットアップ', 'setup')
       .addItem('定期リセット再現（手動ボタン）', 'clearsheet')
-      .addToUi();
+      .addToUi();*/
 
-  ui.createMenu('登校記録監視システム')
-      .addItem('日時自動入力「有効」', 'set_last')
-      .addItem('日時自動入力「無効」', 'delTrigger')
+  ui.createMenu('ここを見つけるなんてすごい！')
+      .addItem('日時自動入力「有効」(廃止)', 'set_last')
+      .addItem('日時自動入力「無効」(廃止)', 'delTrigger')
 
       .addSeparator()
       .addItem('履歴全削除', 'reset2')
