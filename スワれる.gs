@@ -146,9 +146,7 @@ function imagesend(name) {
     return
   }
 
-
-
-  let db = sh4.getRange("A2:E" + sh3.getLastRow()).getValues();
+  let db = sh4.getRange("A2:E" + sh4.getLastRow()).getValues();
   for (let i = 0; i < sh4.getLastRow() - 1; i++) {
     if (db[i][3] == name) {
       if (isNaN(db[i][4])) {
