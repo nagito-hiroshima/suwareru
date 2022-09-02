@@ -1,3 +1,6 @@
+/* 廃止機能 */
+
+/*
 //トリガーを全削除する
 function deleteTrigger() {
   var allTriggers = ScriptApp.getScriptTriggers();
@@ -81,4 +84,4 @@ function set_last() {//トリガーにset_last_updateを追加する
     .forSpreadsheet(sheet)
     .onEdit()
     .create();
-}
+}*/
