@@ -1,6 +1,6 @@
 /* 座席入れ替え機能 */
 
-function irekae() {
+function ChangeSheet() {
   let fromdesk, todesk, memory1, memory2, finder, results
   let targetSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("【】");
   let toSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
