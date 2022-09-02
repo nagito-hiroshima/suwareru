@@ -1,6 +1,3 @@
-function test2() {
-  return "hello world"
-}
 var sh = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("記録");
 var sh2 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("バーコード");
 var sh3 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("この日の出席");
@@ -10,48 +7,6 @@ var sh4 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E"
 
 function set_last_update() {　//編集時A列に時刻記入
   return
-
-  lastRow = sh2.getLastRow();
-  let barcode = sh2.getRange('A' + lastRow).getValue();
-
-  let activerow = sh3.getLastRow() + 1;
-  sh3.getRange(activerow, 1).setNumberFormat('yyyy/MM/dd').setValue(new Date());
-  sh3.getRange(activerow, 2).setValue("=A" + activerow);
-  sh3.getRange(activerow, 3).setValue(barcode);
-  sh3.getRange(activerow, 4).setValue("=IFERROR(VLOOKUP(C" + activerow + ",'名簿'!A2:E,2,FALSE),IFERROR(VLOOKUP(C" + activerow + ",{'名簿'!D:D,'名簿'!B:B},2,false),IFERROR(LEFT(RIGHT(C" + activerow + ",LEN(C" + activerow + ")-FIND(\"_\",C" + activerow + ")),FIND(\"@\",RIGHT(C" + activerow + ",LEN(C" + activerow + ")-FIND(\"_\",C" + activerow + ")))-1))))");
-
-  return
-  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("記録");
-  var activerange = sh.getActiveRange();
-  //var activerow=activerange.getRow();
-  sh.getRange(activerow, 1).setNumberFormat('yyyy/MM/dd').setValue(new Date());
-  sh.getRange(activerow, 2).setValue("=A" + activerow);
-  sh.getRange(activerow, 4).setValue("=IFERROR(VLOOKUP(C" + activerow + ",'名簿'!A2:E,2,FALSE),IFERROR(VLOOKUP(C" + activerow + ",{'名簿'!D:D,'名簿'!B:B},2,false),IFERROR(LEFT(RIGHT(C" + activerow + ",LEN(C" + activerow + ")-FIND(\"_\",C" + activerow + ")),FIND(\"@\",RIGHT(C" + activerow + ",LEN(C" + activerow + ")-FIND(\"_\",C" + activerow + ")))-1))))");
-
-
-  var last_row = sh.getLastRow();
-  var myRange = sh.getRange('C' + (activerow + 1));
-
-  if (myRange.isBlank()) {//下の行が空白か
-
-    //空白ではない
-    sh.getRange(last_row + 1, 3).activate();
-
-  } else {
-
-    //空白
-    sh.getRange(last_row + 1, 3).activate();
-    var last_row = sh.getLastRow();
-    let pasteRange = sh.getRange('A' + (last_row + 1) + ":A" + (last_row + 1));
-    sh.getRange(activerow, 1).setNumberFormat('yyyy/MM/dd').setValue(new Date());
-    sh.getRange(activerow, 2).setValue("=A" + activerow);
-    sh.getRange(activerow, 4).setValue("=IFERROR(VLOOKUP(C" + activerow + ",'名簿'!A2:E,2,FALSE),IFERROR(VLOOKUP(C" + activerow + ",{'名簿'!D:D,'名簿'!B:B},2,false),IFERROR(LEFT(RIGHT(C" + activerow + ",LEN(C" + activerow + ")-FIND(\"_\",C" + activerow + ")),FIND(\"@\",RIGHT(C" + activerow + ",LEN(C" + activerow + ")-FIND(\"_\",C" + activerow + ")))-1))))");
-
-    let copyRange = sh.getRange('A' + activerow + ":" + 'D' + (activerow));
-    copyRange.copyTo(pasteRange);
-    var last_row = sh.getLastRow();　 //F列の値を全て取得
-    sh.deleteRows(activerow);
-  }
 }
 
 
