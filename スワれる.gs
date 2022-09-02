@@ -4,7 +4,7 @@ const log_sheet = sheet.getSheetByName("記録");
 var sh2 = sheet.getSheetByName("バーコード");
 const Today_sheet = sheet.getSheetByName("この日の出席");
 var sh4 = sheet.getSheetByName("名簿");
-const Today_sheet_active = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
+//const Today_sheet_active = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
 
 
 
@@ -19,18 +19,18 @@ function reset() {//座席ランダム関数
   switch (result) {
     case result.YES:
       //コピー対象のセル範囲を選択する
-      let copyRange = Today_sheet_active.getRange('F2:F49');
+      let copyRange = Today_sheet.getRange('F2:F49');
       //貼り付け先のセル範囲を選択する
-      let pasteRange = Today_sheet_active.getRange('A2:A49');
+      let pasteRange = Today_sheet.getRange('A2:A49');
       //コピー対象のセル範囲のデータを貼り付け先のセルにコピーする
       //オプション指定で書式についてはコピー対象から除外する
       copyRange.copyTo(pasteRange);
 
-      Today_sheet_active.getRange('A2:A8').randomize();
-      Today_sheet_active.getRange('A9:A16').randomize();
-      Today_sheet_active.getRange('A17:A26').randomize();
-      Today_sheet_active.getRange('A27:A33').randomize();
-      Today_sheet_active.getRange('A34:A44').randomize();
+      Today_sheet.getRange('A2:A8').randomize();
+      Today_sheet.getRange('A9:A16').randomize();
+      Today_sheet.getRange('A17:A26').randomize();
+      Today_sheet.getRange('A27:A33').randomize();
+      Today_sheet.getRange('A34:A44').randomize();
       ui.alert("座席をシャッフルしました");
       break;
     case result.NO:
@@ -42,17 +42,17 @@ function reset() {//座席ランダム関数
 
 function resets() {
   //コピー対象のセル範囲を選択する
-  let copyRange = Today_sheet_active.getRange('F2:F49');
+  let copyRange = Today_sheet.getRange('F2:F49');
   //貼り付け先のセル範囲を選択する
-  let pasteRange = Today_sheet_active.getRange('A2:A49');
+  let pasteRange = Today_sheet.getRange('A2:A49');
   //コピー対象のセル範囲のデータを貼り付け先のセルにコピーする
   //オプション指定で書式についてはコピー対象から除外する
   copyRange.copyTo(pasteRange);
-  Today_sheet_active.getRange('A2:A8').randomize();
-  Today_sheet_active.getRange('A9:A16').randomize();
-  Today_sheet_active.getRange('A17:A26').randomize();
-  Today_sheet_active.getRange('A27:A33').randomize();
-  Today_sheet_active.getRange('A34:A44').randomize();
+  Today_sheet.getRange('A2:A8').randomize();
+  Today_sheet.getRange('A9:A16').randomize();
+  Today_sheet.getRange('A17:A26').randomize();
+  Today_sheet.getRange('A27:A33').randomize();
+  Today_sheet.getRange('A34:A44').randomize();
 
 
 }
