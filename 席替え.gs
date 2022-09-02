@@ -2,8 +2,9 @@
 
 function ChangeSheet() {
   let fromdesk, todesk, memory1, memory2, finder, results
-  let targetSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("【】");
-  let toSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
+  let sh = SpreadsheetApp.getActiveSpreadsheet()
+  let targetSheet = sh.getSheetByName("【】");
+  let toSheet = sh.getActiveSpreadsheet().getSheetByName("この日の出席");
   let fromename = targetSheet.getRange("B14:B16").getValues();
   let toname = targetSheet.getRange("D14:D16").getValues();
 
