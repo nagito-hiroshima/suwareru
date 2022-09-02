@@ -4,7 +4,6 @@ function ChangeSheet() {
   let fromdesk, todesk, memory1, memory2, finder, results
   let sh = SpreadsheetApp.getActiveSpreadsheet()
   let targetSheet = sh.getSheetByName("【】");
-  let toSheet = sh.getSheetByName("この日の出席");
   let fromename = targetSheet.getRange("B14:B16").getValues();
   let toname = targetSheet.getRange("D14:D16").getValues();
 
@@ -32,22 +31,22 @@ function ChangeSheet() {
 
       //入力された座席識別番号（ex.D10）をシートデータの何行目(ex.A1)に変換
       //新A座席
-      finder = toSheet.getRange("A2:A49").createTextFinder(fromdesk);
+      finder = Today_sheet.getRange("A2:A49").createTextFinder(fromdesk);
       results = finder.findAll();
       results.forEach(function (rng) {
         memory1 = rng.getA1Notation()
       });
 
       //新B座席
-      finder = toSheet.getRange("A2:A49").createTextFinder(todesk);
+      finder = Today_sheet.getRange("A2:A49").createTextFinder(todesk);
       results = finder.findAll();
       results.forEach(function (rng) {
         memory2 = rng.getA1Notation()
       });
 
       //シートデータの座席を入力された座席と変更
-      toSheet.getRange(memory1).setValue(todesk);
-      toSheet.getRange(memory2).setValue(fromdesk);
+      Today_sheet.getRange(memory1).setValue(todesk);
+      Today_sheet.getRange(memory2).setValue(fromdesk);
 
       //出力ボックスの処理
       targetSheet.getRange("B14:D14").setValues([[toname[0], "↔", fromename[0]]])

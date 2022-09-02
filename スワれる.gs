@@ -4,7 +4,6 @@ const log_sheet = sheet.getSheetByName("記録");
 var sh2 = sheet.getSheetByName("バーコード");
 const Today_sheet = sheet.getSheetByName("この日の出席");
 var sh4 = sheet.getSheetByName("名簿");
-//const Today_sheet_active = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
 
 
 
@@ -53,25 +52,8 @@ function resets() {
   Today_sheet.getRange('A17:A26').randomize();
   Today_sheet.getRange('A27:A33').randomize();
   Today_sheet.getRange('A34:A44').randomize();
-
-
 }
 
-function reset2() {//記録シート全削除
-  var ui = SpreadsheetApp.getUi();
-  var result = ui.alert('全記録を削除しますか？', ui.ButtonSet.YES_NO);
-  switch (result) {
-    case result.YES:
-      var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("記録");
-      sh.getRange('A2:D').clearContent();
-      ui.alert("累計記録を削除しました");
-      break;
-    case result.NO:
-      ui.alert("キャンセルしました");
-      return 0;
-      break;
-  }
-}
 
 function form(e) {//フォーム受信時記録シートに（メールアドレス・時刻）を打刻する
   var name = e.namedValues["メールアドレス"];
