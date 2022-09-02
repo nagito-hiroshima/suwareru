@@ -3,6 +3,7 @@ const sheet = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs
 const log_sheet = sheet.getSheetByName("記録");
 var sh2 = sheet.getSheetByName("バーコード");
 const Today_sheet = sheet.getSheetByName("この日の出席");
+const Admin_sheet = sheet.getSheetByName("【】");
 var sh4 = sheet.getSheetByName("名簿");
 
 
