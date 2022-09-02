@@ -39,8 +39,8 @@ function irekae() {
       toSheet.getRange(memory1).setValue(todesk);
       toSheet.getRange(memory2).setValue(fromdesk);
 
-      targetSheet.getRange("B14:D14").setValues([[toname[0],"↔",fromename[0]]])
-      
+      targetSheet.getRange("B14:D14").setValues([[toname[0], "↔", fromename[0]]])
+
       fromename[i][0]
 
       Logger.log(fromename[i][0] + "(" + fromdesk + ") " + "を" + toname[i][0] + "(" + todesk + ") " + "に変更しました。")
