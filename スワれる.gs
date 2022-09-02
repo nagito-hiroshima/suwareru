@@ -9,14 +9,7 @@ var sh4 = sheet.getSheetByName("名簿");
 var sh = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("記録");
 var sh3 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("この日の出席");
 var sh4 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("名簿");
-
 */
-
-
-function set_last_update() {　//編集時A列に時刻記入
-  return
-}
-
 
 function reset() {//座席ランダム関数
   var ui = SpreadsheetApp.getUi();
