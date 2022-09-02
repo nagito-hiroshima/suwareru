@@ -72,7 +72,6 @@ function imagesend(name) {
       break
     }
   }
-
   if (sheetid == undefined) {
     return
   }
