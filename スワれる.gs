@@ -6,6 +6,13 @@ const Today_sheet = sheet.getSheetByName("この日の出席");
 const Admin_sheet = sheet.getSheetByName("【】");
 var sh4 = sheet.getSheetByName("名簿");
 
+/*
+var sh = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("記録");
+var sh2 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("バーコード");
+var sh3 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("この日の出席");
+var sh4 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("名簿");
+
+*/
 
 
 function set_last_update() {　//編集時A列に時刻記入
@@ -58,16 +65,16 @@ function resets() {
 
 function form(e) {//フォーム受信時記録シートに（メールアドレス・時刻）を打刻する
   var name = e.namedValues["メールアドレス"];
-  const last_row = sh.getLastRow();
+  const last_row = log_sheet.getLastRow();
   var activerow = last_row + 1;
   let values = [new Date(), name[0], "=IFERROR(VLOOKUP(B" + activerow + ",'名簿'!A2:E,2,FALSE),IFERROR(VLOOKUP(B" + activerow + ",{'名簿'!D:D,'名簿'!B:B},2,false),IFERROR(LEFT(RIGHT(B" + activerow + ",LEN(B" + activerow + ")-FIND(\"_\",B" + activerow + ")),FIND(\"@\",RIGHT(B" + activerow + ",LEN(B" + activerow + ")-FIND(\"_\",B" + activerow + ")))-1))))"]
-  sh.appendRow(values)
+  log_sheet.appendRow(values)
   imagesend(name)
 }
 
 function imagesend(name) {
   let sheetid
-  let todaysheet = sh3.getRange("A2:D" + sh3.getLastRow()).getValues();
+  let todaysheet = Today_sheet.getRange("A2:D" + Today_sheet.getLastRow()).getValues();
   for (let i = 0; i < 48; i++) {
     if (todaysheet[i][3] == name) {
       sheetid = todaysheet[i][0]
@@ -88,16 +95,4 @@ function imagesend(name) {
       break
     }
   }
-}
-
-function cellCopy() {//ランダムモード・フリーモード切り替え用
-  //スクリプトに紐付いたアクティブなシートを読み込む
-  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("シートデータ");
-  //コピー対象のセル範囲を選択する
-  let copyRange = sh.getRange('E18:F');
-  //貼り付け先のセル範囲を選択する
-  let pasteRange = sh.getRange('B18:C');
-  //コピー対象のセル範囲のデータを貼り付け先のセルにコピーする
-  //オプション指定で書式についてはコピー対象から除外する
-  copyRange.copyTo(pasteRange);
 }
