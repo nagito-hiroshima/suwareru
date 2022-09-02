@@ -1,7 +1,10 @@
-var sh = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("記録");
-var sh2 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("バーコード");
-var sh3 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("この日の出席");
-var sh4 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("名簿");
+/* スワれるメインシステム */
+const sheet = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E")
+const log_sheet = sheet.getSheetByName("記録");
+var sh2 = sheet.getSheetByName("バーコード");
+const Today_sheet = sheet.getSheetByName("この日の出席");
+var sh4 = sheet.getSheetByName("名簿");
+const Today_sheet_active = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
 
 
 
@@ -15,26 +18,19 @@ function reset() {//座席ランダム関数
   var result = ui.alert('席をシャッフルしますか？（元に戻すには編集履歴からしか戻せません）', ui.ButtonSet.YES_NO);
   switch (result) {
     case result.YES:
-      //スクリプトに紐付いたアクティブなシートを読み込む
-      var sh2 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
       //コピー対象のセル範囲を選択する
-      let copyRange = sh2.getRange('F2:F49');
+      let copyRange = Today_sheet_active.getRange('F2:F49');
       //貼り付け先のセル範囲を選択する
-      let pasteRange = sh2.getRange('A2:A49');
+      let pasteRange = Today_sheet_active.getRange('A2:A49');
       //コピー対象のセル範囲のデータを貼り付け先のセルにコピーする
       //オプション指定で書式についてはコピー対象から除外する
       copyRange.copyTo(pasteRange);
 
-
-
-
-
-      var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
-      sh.getRange('A2:A8').randomize();
-      sh.getRange('A9:A16').randomize();
-      sh.getRange('A17:A26').randomize();
-      sh.getRange('A27:A33').randomize();
-      sh.getRange('A34:A44').randomize();
+      Today_sheet_active.getRange('A2:A8').randomize();
+      Today_sheet_active.getRange('A9:A16').randomize();
+      Today_sheet_active.getRange('A17:A26').randomize();
+      Today_sheet_active.getRange('A27:A33').randomize();
+      Today_sheet_active.getRange('A34:A44').randomize();
       ui.alert("座席をシャッフルしました");
       break;
     case result.NO:
@@ -45,19 +41,18 @@ function reset() {//座席ランダム関数
 
 
 function resets() {
-  var sh2 = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("この日の出席");
   //コピー対象のセル範囲を選択する
-  let copyRange = sh2.getRange('F2:F49');
+  let copyRange = Today_sheet_active.getRange('F2:F49');
   //貼り付け先のセル範囲を選択する
-  let pasteRange = sh2.getRange('A2:A49');
+  let pasteRange = Today_sheet_active.getRange('A2:A49');
   //コピー対象のセル範囲のデータを貼り付け先のセルにコピーする
   //オプション指定で書式についてはコピー対象から除外する
   copyRange.copyTo(pasteRange);
-  sh2.getRange('A2:A8').randomize();
-  sh2.getRange('A9:A16').randomize();
-  sh2.getRange('A17:A26').randomize();
-  sh2.getRange('A27:A33').randomize();
-  sh2.getRange('A34:A44').randomize();
+  Today_sheet_active.getRange('A2:A8').randomize();
+  Today_sheet_active.getRange('A9:A16').randomize();
+  Today_sheet_active.getRange('A17:A26').randomize();
+  Today_sheet_active.getRange('A27:A33').randomize();
+  Today_sheet_active.getRange('A34:A44').randomize();
 
 
 }
