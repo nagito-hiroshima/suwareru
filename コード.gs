@@ -1,3 +1,6 @@
+/*廃止予定 */
+
+/*
 // @ts-nocheck
 //起動時に表示するメニュー
 function onOpen(e) {
@@ -11,7 +14,7 @@ function onOpen(e) {
   .addItem('セットアップ', 'setup')
   .addItem('定期リセット再現（手動ボタン）', 'clearsheet')
   .addToUi();*/
-
+/*
   ui.createMenu('ここを見つけるなんてすごい！')
     .addItem('日時自動入力「有効」(廃止)', 'set_last')
     .addItem('日時自動入力「無効」(廃止)', 'delTrigger')
@@ -43,3 +46,4 @@ function setup() {
 
   SpreadsheetApp.getUi().alert("セットアップ完了");
 }
+*/

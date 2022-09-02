@@ -80,7 +80,7 @@ function imagesend(name) {
   for (let i = 0; i < sh4.getLastRow() - 1; i++) {
     if (db[i][3] == name) {
       if (isNaN(db[i][4])) {
-        postMessage(db[i][4], sheetid)
+        SendMessage(db[i][4], sheetid)
       }
       break
     }

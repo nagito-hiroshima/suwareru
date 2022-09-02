@@ -4,7 +4,7 @@
 //POST送信のため有料カウントに該当
 
 //メッセージ送信 user_id = LINEの識別ID,sheet_num = 座席番号
-function postMessage(user_id, sheet_num) {
+function SendMessage(user_id, sheet_num) {
   const url = 'https://api.line.me/v2/bot/message/push'; //push送信URL
   const token = 'Me7/2CNKguCDnT5AiACGsXEcMGH5hSZfFEi+iRgrLjsjhNF75asZVB5o2pK3ekESlQkHq2DLv6zVYCQH8xLxO9uSv3tQQFLZ0gqIPnNzBjN7fO4ncPqNxE1VxTYuX3FJ6xTDkFLRCup2QLtODaPpQgdB04t89/1O/w1cDnyilFU='; //チャネルアクセストークン
 
