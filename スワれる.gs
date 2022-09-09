@@ -3,13 +3,7 @@ const sheet = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs
 const log_sheet = sheet.getSheetByName("記録");
 const Today_sheet = sheet.getSheetByName("この日の出席");
 const Admin_sheet = sheet.getSheetByName("【】");
-var sh4 = sheet.getSheetByName("名簿");
-
-/*
-var sh = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("記録");
-var sh3 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("この日の出席");
-var sh4 = SpreadsheetApp.openById("1me16_aYkFxSZmOrG24Vkr12VIFQx-xefNPeMlHKs1-E").getSheetByName("名簿");
-*/
+const Db_sheet = sheet.getSheetByName("名簿");
 
 function reset() {//座席ランダム関数
   var ui = SpreadsheetApp.getUi();
@@ -63,7 +57,7 @@ function form(e) {//フォーム受信時記録シートに（メールアドレ
   imagesend(name)
 }
 
-function imagesend(name) {
+function imagesend(name) {//画像送信
   let sheetid
   let todaysheet = Today_sheet.getRange("A2:D" + Today_sheet.getLastRow()).getValues();
   for (let i = 0; i < 48; i++) {
@@ -76,8 +70,8 @@ function imagesend(name) {
     return
   }
 
-  let db = sh4.getRange("A2:E" + sh4.getLastRow()).getValues();
-  for (let i = 0; i < sh4.getLastRow() - 1; i++) {
+  let db = Db_sheet.getRange("A2:E" + Db_sheet.getLastRow()).getValues();
+  for (let i = 0; i < Db_sheet.getLastRow() - 1; i++) {
     if (db[i][3] == name) {
       if (isNaN(db[i][4])) {
         SendMessage(db[i][4], sheetid)
