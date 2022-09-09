@@ -28,4 +28,3 @@ function SendMessage(user_id, sheet_num) {
 
   UrlFetchApp.fetch(url, params);
 }
-
